@@ -5,6 +5,7 @@ const settings = require('./settings.json');
 
 client.on('ready',() => {
 	console.log('Pronta para salvar o dia');
+	client.user.setGame('o Yuuji da sacada')
 });
 
 client.on('message', message => {
