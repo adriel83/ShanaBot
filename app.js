@@ -13,7 +13,7 @@ client.on('message', message => {
   }
 });
 client.on('message', message => {
-  if (message.content === settings.prefix+'canal') {
+  if (message.content === 'canal') {
   const channel = message.member.voiceChannel;
   channel.join()
   .then(connection => console.log('Conectada'))
