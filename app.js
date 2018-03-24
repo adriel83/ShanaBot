@@ -13,8 +13,10 @@ client.on('message', message => {
   }
 });
 client.on('message', message => {
-  if (message.content === 'Te amo Shana') {
-    reaction.message.channel.send(' ${:heart:}');
+  if (message.content === settings.prefix+'canal') {
+  voiceChannel.join()
+  .then(connection => console.log('Connected!'))
+  .catch(console.error);
   }
 });
 
