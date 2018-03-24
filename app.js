@@ -5,9 +5,13 @@ const settings = require('./settings.json');
 
 client.on('ready',() => {
 	console.log('Pronta para salvar o dia');
+	client.user.setPresence({ status: 'online', game: { name: 'o Yuuji da sacada' } });
 });
-
-var prefix = "-"
+client.on('message', message => {
+  if (message.content === 'avatar') {
+    message.reply(message.author.avatarURL);
+  }
+});
 client.on('message', message => {
 	if (message.author === client.user) return;
 	if (message.content.startsWith('Vc me ama?')) {
