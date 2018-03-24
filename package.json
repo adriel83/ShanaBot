@@ -1,0 +1,17 @@
+{
+  "name": "shana",
+  "version": "0.0.1",
+  "description": "Bot da Shana",
+  "main": "app.js",
+  "dependencies": {
+    "bufferutil": "^3.0.3",
+    "discord.js": "^11.3.2",
+    "opusscript": "0.0.6"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Adriel",
+  "license": "MIT"
+}
