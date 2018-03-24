@@ -11,7 +11,7 @@ var prefix = "-"
 client.on('message', message => {
 	if (message.author === client.user) return;
 	if (message.content.startsWith('Vc me ama?')) {
-		message.channel.sendMessage('Claro, Baka');
+		message.channel.send('Claro, Baka');
 	}
 });
 
