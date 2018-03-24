@@ -13,6 +13,12 @@ client.on('message', message => {
   }
 });
 client.on('message', message => {
+  if (message.content === 'Te amo Shana') {
+    reaction.message.channel.send(' ${:heart:}');
+  }
+});
+
+client.on('message', message => {
 	if (message.author === client.user) return;
 	if (message.content.startsWith('Vc me ama?')) {
 		message.channel.sendMessage('Claro, Baka');
