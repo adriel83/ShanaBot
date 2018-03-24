@@ -13,6 +13,10 @@ client.on('message', message => {
 	if (message.content.startsWith('Vc me ama?')) {
 		message.channel.send('Claro, Baka');
 	}
+client.on('message', message => {
+	if (message.content === '-avatar') {
+    message.reply(message.author.avatarURL);
+  }
 });
 
 client.login(settings.token);
