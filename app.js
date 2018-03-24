@@ -9,7 +9,6 @@ client.on('ready',() => {
 });
 
 client.on('message', message => {
-	 if (!message.content.startsWith(prefix) || message.author.bot) return;
 	if (message.author === client.user) return;
 	if (message.content.startsWith('Vc me ama?')) {
 		message.channel.send('Claro, Baka');
