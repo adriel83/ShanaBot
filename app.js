@@ -7,7 +7,6 @@ client.on('ready',() => {
 	console.log('Pronta para salvar o dia');
 });
 
-var prefix = "-"
 client.on('message', message => {
 	 if (!message.content.startsWith(prefix) || message.author.bot) return;
 	if (message.author === client.user) return;
