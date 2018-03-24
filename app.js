@@ -14,7 +14,7 @@ client.on('message', message => {
 		message.channel.send('Claro, Baka');
 	}
 client.on('message', message => {
-	if (message.content === '-avatar') {
+	if (message.content === 'settings.prefix'+'avatar') {
     message.reply(message.author.avatarURL);
   }
 });
