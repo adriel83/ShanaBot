@@ -2,7 +2,7 @@
 const Discord = require('discord.js');
 const client = new Discord.Client();
 const settings = require('./settings.json');
-var musica = home/adrieldragon/1.mp3
+var musica = 'home/adrieldragon/1.mp3';
 client.on('ready',() => {
 	console.log('Pronta para salvar o dia');
 	client.user.setPresence({ status: 'online', game: { name: 'o Yuuji da sacada' } });
