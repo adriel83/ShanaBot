@@ -21,7 +21,8 @@ client.on('message', message => {
   }
 });
 client.on('message', message => {
-	if(message.content== 'sair') {
+
+		if(message.content== 'sair') {
 	const channel = message.member.voiceChannel;
 	channel.leave();
   }
@@ -33,7 +34,14 @@ client.on('message', message => {
 	}
 });
 client.on('message', message => {
-const connection = connection.playFile('/home/adrieldragon/Nightcore - Ready for love.mp3');
-channel.join().then(connection =>{tocar}).catch(err => console.log(err));
+		if(message.content== 'tocar') {
+        var voiceChannel = message.member.voiceChannel;
+        voiceChannel.join().then(connection => {
+            console.log("joined channel");
+            const dispatcher = connection.playFile('/home/adrieldragon/Nightcore - Ready for love.mp3');
+            dispatcher.on("end", end => {
+                console.log("left channel");
+                voiceChannel.leave();}
+            });
 });
 client.login(settings.token);
