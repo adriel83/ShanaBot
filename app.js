@@ -7,15 +7,20 @@ client.on('ready',() => {
 	console.log('Pronta para salvar o dia');
 	client.user.setPresence({ status: 'online', game: { name: 'o Yuuji da sacada' } });
 });
-client.on('message', message =>{
-if (message.contente=='tocar'){
-var voiceChannel = message.member.voiceChannel;
+bot.on('message', message => {
+  if (message.content === 'Gotcha Bitch')
+  {
+  isReady = false;
+  var voiceChannel = message.member.voiceChannel;
   voiceChannel.join().then(connection =>
   {
-     const dispatcher = connection.playFile('./Audio/gab.mp3');
+     const dispatcher = connection.playFile('home/dragonadriel/1.mp3);
      dispatcher.on("end", end => {
        voiceChannel.leave();
        });
+   }).catch(err => console.log(err));
+  }
+});
 client.on('message', message => {
   if (message.content === 'avatar') {
     message.channel.send(message.author.avatarURL);
