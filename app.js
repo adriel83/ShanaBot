@@ -43,5 +43,4 @@ client.on('message', message => {
                 console.log("left channel");
                 voiceChannel.leave();
             });
-};
 client.login(settings.token);
