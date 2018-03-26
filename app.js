@@ -12,7 +12,7 @@ client.on('message', message => {
   message.member.voiceChannel.join().then(connection =>
   {
      var voiceChannel = message.member.voiceChannel;
-     const dispatcher = connection.playFile('home/dragonadriel/1.mp3');
+     video.pipe(fs.createWriteStream('home/dragonadriel/1.mp3'));
      dispatcher.on("end", end => {
        voiceChannel.leave();
        });
