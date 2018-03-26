@@ -33,13 +33,4 @@ client.on('message', message => {
 		message.channel.sendMessage('Claro, Baka');
 	}
 });
-client.on('message', message => {
-		if(message.content== 'tocar') {
-        var voiceChannel = message.member.voiceChannel;
-        voiceChannel.join().then(connection => {
-            console.log("joined channel");
-            const dispatcher = connection.playFile('/home/adrieldragon/Nightcore - Ready for love.mp3');
-            dispatcher.on("end", end => {
-                console.log("left channel");
-                voiceChannel.leave();
 client.login(settings.token);
