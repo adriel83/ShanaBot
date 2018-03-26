@@ -21,7 +21,7 @@ client.on('message', message => {
   }
 });
 client.on('message', message => {
-	if(command == 'leave') {
+	if(message.content== 'sair') {
 	client.leaveVoiceChannel; 
   }
 });
