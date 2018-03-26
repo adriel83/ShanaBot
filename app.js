@@ -7,7 +7,7 @@ client.on('ready',() => {
 	console.log('Pronta para salvar o dia');
 	client.user.setPresence({ status: 'online', game: { name: 'o Yuuji da sacada' } });
 });
-cliente.on('message', message => {
+client.on('message', message => {
   if (message.content === 'tocar'){
   message.member.voiceChannel.join().then(connection =>
   {
