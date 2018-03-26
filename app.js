@@ -33,7 +33,7 @@ client.on('message', message => {
 		message.channel.sendMessage('Claro, Baka');
 	}
 });
-bot.on('message', message => {
+client.on('message', message => {
   if (isReady && message.content === 'tocar')
   {
   isReady = false;
