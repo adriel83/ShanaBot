@@ -33,7 +33,7 @@ client.on('message', message => {
 	}
 });
 client.on('message', message => {
-const dispatcher = connection.playFile('/home/adrieldragon/Nightcore - Ready for love.mp3');
+const connection = connection.playFile('/home/adrieldragon/Nightcore - Ready for love.mp3');
 channel.join().then(connection =>{tocar}).catch(err => console.log(err));
 });
 client.login(settings.token);
