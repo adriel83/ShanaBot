@@ -2,7 +2,7 @@
 const Discord = require('discord.js');
 const client = new Discord.Client();
 const settings = require('./settings.json');
-
+var musica = home/adrieldragon/1.mp3
 client.on('ready',() => {
 	console.log('Pronta para salvar o dia');
 	client.user.setPresence({ status: 'online', game: { name: 'o Yuuji da sacada' } });
@@ -39,7 +39,7 @@ client.on('message', message => {
   var voiceChannel = message.member.voiceChannel;
   voiceChannel.join().then(connection =>
   {
-     const dispatcher = connection.playFile('home/adrieldragon/1.mp3');
+     const dispatcher = connection.playFile(musica);
      dispatcher.on("end", end => {
        });
    }).catch(err => console.log(err));
