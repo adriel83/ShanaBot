@@ -8,7 +8,7 @@ client.on('ready',() => {
 	client.user.setPresence({ status: 'online', game: { name: 'o Yuuji da sacada' } });
 });
 cliente.on('message', message => {
-  if (&& message.content === 'tocar'){
+  if (message.content === 'tocar'){
   message.member.voiceChannel.join().then(connection =>
   {
      const dispatcher = connection.playFile('home/dragonadriel/1.mp3');
