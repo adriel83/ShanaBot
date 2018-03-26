@@ -19,7 +19,6 @@ client.on('message', message => {
     const dispatcher = connection.playFile('clip.mp3');
     dispatcher.on('end', () => connection.disconnect());
   });
-});
 client.on('message', message => {
 
 		if(message.content== 'sair') {
