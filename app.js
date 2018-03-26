@@ -21,8 +21,8 @@ client.on('message', message => {
   }
 });
 client.on('message', message => {
-  if (message.content === 'sai') {
-  voiceChannel.leave();
+	if(command == 'leave') {
+	client.leaveVoiceChannel; 
   }
 });
 client.on('message', message => {
