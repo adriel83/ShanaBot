@@ -33,4 +33,20 @@ client.on('message', message => {
 		message.channel.sendMessage('Claro, Baka');
 	}
 });
+bot.on('message', message => {
+  if (isReady && message.content === 'tocar')
+  {
+  isReady = false;
+  var voiceChannel = message.member.voiceChannel;
+  voiceChannel.join().then(connection =>
+  {
+     const dispatcher = connection.playFile('./Audio/gab.mp3');
+     dispatcher.on("end", end => {
+       voiceChannel.leave();
+       });
+   }).catch(err => console.log(err));
+   isReady = true;
+  }
+});
+
 client.login(settings.token);
