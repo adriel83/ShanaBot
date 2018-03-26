@@ -22,7 +22,7 @@ client.on('message', message => {
 });
 client.on('message', message => {
 	if(message.content== 'sair') {
-	voiceChannel.leave();
+	client.voiceChannel.leave();
   }
 });
 client.on('message', message => {
