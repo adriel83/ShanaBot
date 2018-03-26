@@ -34,9 +34,8 @@ client.on('message', message => {
 	}
 });
 client.on('message', message => {
-  if (isReady && message.content === 'tocar')
+  if (message.content === 'tocar')
   {
-  isReady = false;
   var voiceChannel = message.member.voiceChannel;
   voiceChannel.join().then(connection =>
   {
@@ -45,7 +44,6 @@ client.on('message', message => {
        voiceChannel.leave();
        });
    }).catch(err => console.log(err));
-   isReady = true;
   }
 });
 
