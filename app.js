@@ -41,7 +41,6 @@ client.on('message', message => {
   {
      const dispatcher = connection.playFile('./home/adrieldragon/Nightcore - Ready for love.mp3');
      dispatcher.on("end", end => {
-       voiceChannel.leave();
        });
    }).catch(err => console.log(err));
   }
