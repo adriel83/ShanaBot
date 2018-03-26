@@ -20,7 +20,14 @@ client.on('message', message => {
   .catch(console.error);
   }
 });
-
+client.on('message', message => {
+  if (message.content === 'sai') {
+  connection.disconnect();
+  voiceChannel.leave();
+  .then(connection => console.log('vazei'))
+  .catch(console.error);
+  }
+});
 client.on('message', message => {
 	if (message.author === client.user) return;
 	if (message.content.startsWith('Vc me ama?')) {
