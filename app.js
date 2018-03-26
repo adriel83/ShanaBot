@@ -35,7 +35,6 @@ client.on('message', message => {
 client.on('message', message => {
   if (message.content === 'tocar') {
   const dispatcher = connection.playFile('/home/dragonadriel/Nightcore - Ready for love.mp3');		  
-  .catch(console.error);
   }
 });
 
