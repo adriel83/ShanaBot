@@ -24,17 +24,4 @@ client.on('message', message => {
 		message.channel.sendMessage('Claro, Baka');
 	}
 });
-client.on('message', message => {
-  if (message.content === 'tocar')
-  {
-  var voiceChannel = message.member.voiceChannel;
-  voiceChannel.join().then(connection =>
-  {
-     const dispatcher = connection.playFile(musica);
-     dispatcher.on("end", end => {
-       });
-   }).catch(err => console.log(err));
-  }
-});
-
 client.login(settings.token);
