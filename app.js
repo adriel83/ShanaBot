@@ -22,7 +22,8 @@ client.on('message', message => {
 });
 client.on('message', message => {
 	if(message.content== 'sair') {
-	client.voiceChannel.leave();
+	const channel = message.member.voiceChannel;
+	channel.leave();
   }
 });
 client.on('message', message => {
