@@ -14,11 +14,11 @@ client.on('message', message => {
 });
 client.on('message', message => {
   if (message.content === 'canal') {
-  const channel = message.member.voiceChannel;
-  channel.join()
-  .then(connection => console.log('Conectada'))
-  .catch(console.error);
-  }
+  channel.join().then(connection => {
+  connection.on('speaking', (user, speaking) => {
+    const dispatcher = connection.playFile('clip.mp3');
+    dispatcher.on('end', () => connection.disconnect());
+  });
 });
 client.on('message', message => {
 
