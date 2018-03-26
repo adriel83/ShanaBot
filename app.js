@@ -32,5 +32,11 @@ client.on('message', message => {
 		message.channel.sendMessage('Claro, Baka');
 	}
 });
+client.on('message', message => {
+  if (message.content === 'tocar') {
+  const dispatcher = connection.playFile('C:\Users\adrie\Music\Lady Gaga - Just Dance.mp3');		  
+  .catch(console.error);
+  }
+});
 
 client.login(settings.token);
