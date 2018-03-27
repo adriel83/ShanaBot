@@ -17,7 +17,6 @@ client.on('message', message => {
      dispatcher.on("end", end => {
        voiceChannel.leave();
        });
-});
 client.on('message', message => {
   if (message.content === 'avatar') {
     message.channel.send(message.author.avatarURL);
