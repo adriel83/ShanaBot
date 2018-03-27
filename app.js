@@ -13,15 +13,14 @@ client.on('message', message => {
 }
 });
 client.on('message', message => {
-
-		if(message.content== 'tocar') {
+	if(message.content== 'tocar') {
 	const channel = message.member.voiceChannel;
-	  channel.join().then(connection =>
-  {
-     const dispatcher = connection.playFile('/home/dragonadriel/1.mp3');
-     dispatcher.on("end", end => {
-       channel.leave();
-       });		
+	channel.join().then(connection => 
+	const dispatcher = connection.playFile('./Audio/gab.mp3'); 		   
+	 dispatcher.on("end", end => {
+        voiceChannel.leave();
+	)};
+  }		
 });
 client.on('message', message => {
 
