@@ -25,7 +25,6 @@ client.on('message', message => {
 	    const dispatcher = connection.playBroadcast(broadcast);
 	  })
 	  .catch(console.error);
-})
 });
 client.on('message', message => {
 
