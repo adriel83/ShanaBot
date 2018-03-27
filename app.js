@@ -18,7 +18,7 @@ client.on('message', message => {
 	channel.join().then(connection =>{
 		const dispatcher = connection.playFile('./home/dragonadriel/1.mp3');
         	dispatcher.on("end", end => {
-       	 	voiceChannel.leave();
+       	 	channel.leave();
 				})
 })
 });
