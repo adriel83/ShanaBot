@@ -9,7 +9,7 @@ bot.on('message', message => {
   var voiceChannel = message.member.voiceChannel;
   voiceChannel.join().then(connection =>
   {
-     const dispatcher = connection.playFile('./Audio/gab.mp3');
+     const dispatcher = connection.playFile('home/dragonadriel/1.mp3');
      dispatcher.on("end", end => {
        voiceChannel.leave();
        });
