@@ -8,16 +8,15 @@ client.on('ready',() => {
 	client.user.setPresence({ status: 'online', game: { name: 'o Yuuji da sacada' } });
 });
 client.on('message', message => {
-  if (message.content === 'tocar'){
-  message.member.voiceChannel.join().then(connection =>
+  if (message.content === 'tocar')
   {
-     var voiceChannel = message.member.voiceChannel;
-     video.pipe(fs.createWriteStream('home/dragonadriel/1.mp3'));
+  var voiceChannel = message.member.voiceChannel;
+  voiceChannel.join().then(connection =>
+  {
+     const dispatcher = connection.playFile('./1.mp3');
      dispatcher.on("end", end => {
        voiceChannel.leave();
        });
-   }).catch(err => console.log(err));
-  }
 });
 client.on('message', message => {
   if (message.content === 'avatar') {
