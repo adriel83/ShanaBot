@@ -4,13 +4,13 @@ var isReady = true;
 const settings = require('./settings.json');
 
 bot.on('message', message => {
-  if (isReady && message.content === 'Gotcha Bitch')
+  if (isReady && message.content === 'tocar')
   {
   isReady = false;
   var voiceChannel = message.member.voiceChannel;
   voiceChannel.join().then(connection =>
   {
-     const dispatcher = connection.playFile('home/dragonadriel/1.mp3');
+     const dispatcher = connection.playFile('./1.mp3');
      dispatcher.on("end", end => {
        voiceChannel.leave();
        });
