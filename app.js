@@ -14,7 +14,7 @@ client.on('message', message => {
 });
 client.on('message', message => { 
         const channel = message.member.voiceChannel;
-	if(message.content== 'sair')
+	if(message.content== 'tocar')
 	channel.join().then(connection =>{
 		const dispatcher = connection.playFile('./home/dragonadriel/1.mp3');
         	dispatcher.on("end", end => {
