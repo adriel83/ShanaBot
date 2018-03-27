@@ -1,6 +1,7 @@
 var Discord = require('discord.js');
 var bot = new Discord.Client();
 var isReady = true;
+const settings = require('./settings.json');
 
 bot.on('message', message => {
   if (isReady && message.content === 'Gotcha Bitch')
