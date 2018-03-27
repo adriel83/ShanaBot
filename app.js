@@ -12,13 +12,14 @@ client.on('message', message => {
     message.channel.send(message.author.avatarURL);
 }
 });
-client.on('message', message => {
+client.on('message', message => { 
         const channel = message.member.voiceChannel;
 	if(message.content== 'sair')
 	channel.join().then(connection =>{
 		const dispatcher = connection.playFile('./home/dragonadriel/1.mp3');
         	dispatcher.on("end", end => {
-       	 	voiceChannel.leave()};
+       	 	voiceChannel.leave();
+					}
 })
 });
 client.on('message', message => {
