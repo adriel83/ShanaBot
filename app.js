@@ -8,15 +8,13 @@ client.on('ready',() => {
 	client.user.setPresence({ status: 'online', game: { name: 'o Yuuji da sacada' } });
 });
 client.on('message', message => {
-  if (message.content === 'tocar')
-  {
-  var voiceChannel = message.member.voiceChannel;
+var voiceChannel = message.member.voiceChannel;
   voiceChannel.join().then(connection =>
   {
-     const dispatcher = connection.playFile('./1.mp3');
+     const dispatcher = connection.playFile('/home/dragonadriel/1.mp3');
      dispatcher.on("end", end => {
        voiceChannel.leave();
-       });
+});
 client.on('message', message => {
   if (message.content === 'avatar') {
     message.channel.send(message.author.avatarURL);
