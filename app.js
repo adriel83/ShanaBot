@@ -22,7 +22,6 @@ client.on('message', message => {
      dispatcher.on("end", end => {
        channel.leave();
        });		
-  }
 });
 client.on('message', message => {
 
