@@ -2,7 +2,6 @@
 const Discord = require('discord.js');
 const client = new Discord.Client();
 const settings = require('./settings.json');
-var musica = 'home/adrieldragon/1.mp3';
 const ytdl = require('ytdl-core');
 const streamOptions = { seek: 0, volume: 1 };
 const broadcast = client.createVoiceBroadcast();
@@ -12,11 +11,12 @@ client.on('ready',() => {
 });
 client.on('message', message => {
   if (message.content === 'avatar') {
-    message.channel.send(message.author.avatarURL);
+    message.channel.send('Seu avatar '+ message.author.avatarURL);
 }
 });
-client.on('message', message => { 
+client.on('message', message => {
         const channel = message.member.voiceChannel;
+
 	if(message.content== 'tocar')
 	channel.join()
 	  .then(connection => {
@@ -24,7 +24,8 @@ client.on('message', message => {
 	    broadcast.playStream(stream);
 	    const dispatcher = connection.playBroadcast(broadcast);
 	  })
-	  .catch(console.error);
+		console.log('Tocando')
+		.catch(console.error);
 });
 client.on('message', message => {
 
