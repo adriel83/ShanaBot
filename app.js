@@ -26,6 +26,15 @@ client.on('message', message => {
 	  })
 		console.log('Tocando')
 });
+	if(message.content== 'tocar 2')
+	channel.join()
+	  .then(connection => {
+	    const stream = ytdl('https://www.youtube.com/watch?v=vh5qg6baBY8', { filter : 'audioonly' });
+	    broadcast.playStream(stream);
+	    const dispatcher = connection.playBroadcast(broadcast);
+	  })
+		console.log('Tocando')
+});
 client.on('message', message => {
 
 		if(message.content== 'sair') {
