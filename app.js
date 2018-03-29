@@ -26,6 +26,7 @@ client.on('message', message => {
 	  })
 		console.log('Tocando')
 });
+client.on('message', message => {
 	if(message.content== 'tocar 2')
 	channel.join()
 	  .then(connection => {
