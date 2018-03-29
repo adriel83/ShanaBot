@@ -16,7 +16,6 @@ client.on('message', message => {
 });
 client.on('message', message => {
         const channel = message.member.voiceChannel;
-
 	if(message.content== 'tocar')
 	channel.join()
 	  .then(connection => {
@@ -27,6 +26,7 @@ client.on('message', message => {
 		console.log('Tocando')
 });
 client.on('message', message => {
+	const channel = message.member.voiceChannel;
 	if(message.content== 'tocar 2')
 	channel.join()
 	  .then(connection => {
