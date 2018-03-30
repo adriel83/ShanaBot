@@ -32,7 +32,7 @@ client.on('message', message => {
 
 client.on('message', message => {
 	const channel = message.member.voiceChannel;
-	if(message.content== 'tocar 2')
+	if(message.content== 'tocar 2'){
 	channel.join()
 	  .then(connection => {
 	    const stream = ytdl('https://www.youtube.com/watch?v=vh5qg6baBY8', { filter : 'audioonly' });
