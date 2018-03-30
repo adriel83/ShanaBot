@@ -16,10 +16,10 @@ client.on('message', message => {
 }
 });
 
-client.on('message', message => {
+/*client.on('message', message => {
         const channel = message.member.voiceChannel;
 	//if(message.content== 'tocar')
-	if (message.content!=''){
+	if (message.content<>''){
 	channel.join()
 	  .then(connection => {
 	    const stream = ytdl(message.content, { filter : 'audioonly' });
@@ -27,22 +27,9 @@ client.on('message', message => {
 	    const dispatcher = connection.playBroadcast(broadcast);
 	  })
 		console.log('Tocando')
+*/
 }
 });
-
-client.on('message', message => {
-	const channel = message.member.voiceChannel;
-	if(message.content== 'tocar 2'){
-	channel.join()
-	  .then(connection => {
-	    const stream = ytdl('https://www.youtube.com/watch?v=vh5qg6baBY8', { filter : 'audioonly' });
-	    broadcast.playStream(stream);
-	    const dispatcher = connection.playBroadcast(broadcast);
-	  })
-		console.log('Tocando')
-	}
-});
-
 client.on('message', message => {
 		if(message.content== 'sair') {
 	const channel = message.member.voiceChannel;
