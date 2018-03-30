@@ -27,9 +27,10 @@ client.on('message', message => {
 	    const dispatcher = connection.playBroadcast(broadcast);
 	  })
 		console.log('Tocando')
-*/
 }
+
 });
+*/
 client.on('message', message => {
 		if(message.content== 'sair') {
 	const channel = message.member.voiceChannel;
