@@ -10,7 +10,7 @@ client.on('ready',() => {
 });
 client.on('message', message => {
   if (message.content === 'avatar') {
-    message.channel.send('Seu avatar '+ message.author.avatarURL);
+    message.channel.send('Seu avatar '+ message.author.displayAvatarURL);
 }
 });
 client.on('message', message => {
