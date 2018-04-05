@@ -18,22 +18,18 @@ client.on('message', message => {
 
 	if(message.content== 'tocar')
 	channel.join()
-	  message.channel.send('manda o link');
-		if (message.content == message.content) {
-			const link = message.content;
-			(connection => {
-				const stream = ytdl(link, { filter : 'audioonly' });
+			.then(connection => {
+				const args = message.content.slice('tocar');
+				const stream = ytdl(message.content, { filter : 'audioonly' });
 				broadcast.playStream(stream);
 				const dispatcher = connection.playBroadcast(broadcast);
 			})
 			console.log('Tocando')
-		}
-
 });
 client.on('message', message => {
 	if(message.content== 'tocar 2')
 	channel.join()
-	(connection => {
+	  .then(connection => {
 	    const stream = ytdl('https://www.youtube.com/watch?v=vh5qg6baBY8', { filter : 'audioonly' });
 	    broadcast.playStream(stream);
 	    const dispatcher = connection.playBroadcast(broadcast);
