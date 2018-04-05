@@ -21,7 +21,7 @@ client.on('message', message => {
 	  message.channel.send('manda o link');
 		if (message.content == message.content) {
 			const link = message.content;
-			.then(connection => {
+			(connection => {
 				const stream = ytdl(link, { filter : 'audioonly' });
 				broadcast.playStream(stream);
 				const dispatcher = connection.playBroadcast(broadcast);
