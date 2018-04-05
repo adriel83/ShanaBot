@@ -10,24 +10,22 @@ client.on('ready',() => {
 });
 client.on('message', message => {
   if (message.content === 'avatar') {
-    message.channel.send('Seu avatar '+ message.author.displayAvatarURL);
+    message.channel.send('Seu avatar '+ message.author.avatarURL);
 }
 });
 client.on('message', message => {
         const channel = message.member.voiceChannel;
-				if(message.content== 'tocar'){
-				channel.join()
-					.then(connection => {
-					const link = message.content.slice('tocar');
-					const stream = ytdl(link, {filter : 'audioonly'});
-					broadcast.playStream(stream);
-				const dispatcher = connection.playBroadcast(broadcast);
-			})
-			console.log('Tocando')
-			}
+
+	if(message.content== message.content)
+	channel.join()
+	  .then(connection => {
+	    const stream = ytdl(message.content, { filter : 'audioonly' });
+	    broadcast.playStream(stream);
+	    const dispatcher = connection.playBroadcast(broadcast);
+	  })
+		console.log('Tocando')
 });
 client.on('message', message => {
-	const channel = message.member.voiceChannel;
 	if(message.content== 'tocar 2')
 	channel.join()
 	  .then(connection => {
