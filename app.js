@@ -6,7 +6,7 @@ const streamOptions = { seek: 0, volume: 1 };
 const broadcast = client.createVoiceBroadcast();
 client.on('ready',() => {
 	console.log('Pronta para salvar o dia');
-	client.user.setPresence({ status: 'online', game: { name: 'o Yuuji da sacada' } { type: 'LISTENING' }});
+	client.user.setPresence({ status: 'online', game: { name: 'o Yuuji da sacada' }, type: 'LISTENING' });
 });
 client.on('message', message => {
   if (message.content === 'avatar') {
