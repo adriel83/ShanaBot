@@ -15,7 +15,7 @@ client.on('message', message => {
 });
 client.on('message', message => {
         const channel = message.member.voiceChannel;
-				if(message.content== 'tocar')
+				if(message.content== 'tocar'){
 				channel.join()
 					.then(connection => {
 					const link = message.content.slice('tocar');
@@ -24,6 +24,7 @@ client.on('message', message => {
 				const dispatcher = connection.playBroadcast(broadcast);
 			})
 			console.log('Tocando')
+			}
 });
 client.on('message', message => {
 	const channel = message.member.voiceChannel;
