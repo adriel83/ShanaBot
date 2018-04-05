@@ -15,12 +15,11 @@ client.on('message', message => {
 });
 client.on('message', message => {
         const channel = message.member.voiceChannel;
-
 				if(message.content== 'tocar')
 				channel.join()
 					.then(connection => {
 					const link = message.content.slice('tocar');
-					const stream = ytdl(link, { filter : 'audioonly' });
+					const stream = ytdl(link, {filter : 'audioonly'});
 					broadcast.playStream(stream);
 				const dispatcher = connection.playBroadcast(broadcast);
 			})
