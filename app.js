@@ -18,7 +18,7 @@ client.on('message', message => {
 
 	if(message.content== 'tocar')
 	channel.join()
-	  message.channel.send('manda o link'));
+	  message.channel.send('manda o link');
 		if (message.content == message.content) {
 			const link = message.content;
 			.then(connection => {
