@@ -16,14 +16,19 @@ client.on('message', message => {
 client.on('message', message => {
         const channel = message.member.voiceChannel;
 
-	if(message.content== message.content)
+	if(message.content== 'tocar')
 	channel.join()
-	  .then(connection => {
-	    const stream = ytdl(message.content, { filter : 'audioonly' });
-	    broadcast.playStream(stream);
-	    const dispatcher = connection.playBroadcast(broadcast);
-	  })
-		console.log('Tocando')
+	  message.channel.send('manda o link'));
+		if (message.content == message.content) {
+			const link = message.content;
+			.then(connection => {
+				const stream = ytdl(link, { filter : 'audioonly' });
+				broadcast.playStream(stream);
+				const dispatcher = connection.playBroadcast(broadcast);
+			})
+			console.log('Tocando')
+		}
+
 });
 client.on('message', message => {
 	if(message.content== 'tocar 2')
