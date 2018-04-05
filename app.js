@@ -22,8 +22,8 @@ client.on('message', message => {
 	    const stream = ytdl(link, { filter : 'audioonly' });
 	    broadcast.playStream(stream);
 	    const dispatcher = connection.playBroadcast(broadcast);
-	  })
-		console.log('Tocando')
+	    console.log('Tocando')
+	  })	
 }
 });
 client.on('message', message => {
