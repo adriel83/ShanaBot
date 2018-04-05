@@ -33,7 +33,7 @@ client.on('message', message => {
 client.on('message', message => {
 	if(message.content== 'tocar 2')
 	channel.join()
-	  .then(connection => {
+	(connection => {
 	    const stream = ytdl('https://www.youtube.com/watch?v=vh5qg6baBY8', { filter : 'audioonly' });
 	    broadcast.playStream(stream);
 	    const dispatcher = connection.playBroadcast(broadcast);
