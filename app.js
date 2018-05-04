@@ -4,6 +4,7 @@ const settings = require('./settings.json');
 const ytdl = require('ytdl-core');
 const streamOptions = { seek: 0, volume: 1 };
 const broadcast = client.createVoiceBroadcast();
+const stream = require('/stream.js');
 client.on('ready',() => {
 	console.log('Pronta para salvar o dia');
 	client.user.setPresence({ status: 'online', game: { name: 'o Yuuji da sacada' } });

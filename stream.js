@@ -1,3 +1,4 @@
+module.exports = {
 function stream(){
   const channel = message.member.voiceChannel;
   var link = message.content.slice('tocar'.length)
@@ -10,3 +11,4 @@ function stream(){
   broadcast.
   })
   }
+}  
