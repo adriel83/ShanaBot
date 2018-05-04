@@ -14,16 +14,8 @@ client.on('message', message => {
 }
 });
 client.on('message', message => {
-        const channel = message.member.voiceChannel;
-	if (message.content.startsWith('tocar')){
-	var link = message.content.slice('tocar'.length)
-	channel.join()
-	  .then(connection => {
-	    const stream = ytdl(link, { filter : 'audioonly' });
-	    broadcast.playStream(stream);
-	    const dispatcher = connection.playBroadcast(broadcast);
-	    console.log('Tocando')
-	  })
+if (message.content.startsWith('tocar')){
+new stream();
 }
 });
 client.on('message', message => {
