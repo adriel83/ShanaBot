@@ -9,7 +9,7 @@ client.on('ready',() => {
 	client.user.setPresence({ status: 'online', game: { name: 'o Yuuji da sacada' } });
 });
 client.on('message', message => {
-  if (message.content.ignoreCase === 'avatar') {
+  if (message.content === 'avatar') {
     message.channel.send('Seu avatar '+ message.author.avatarURL);
 }
 });
