@@ -23,7 +23,7 @@ if (message.content.startsWith('tocar')){
   broadcast.playStream(stream);
   const dispatcher = connection.playBroadcast(broadcast);
   console.log('Tocando')
-  broadcast.
+  }
 });
 client.on('message', message => {
 
