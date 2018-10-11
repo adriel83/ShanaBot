@@ -1,3 +1,3 @@
 # ShanaBot
-This is a test music bot I made to improve my coding as a whole.
+A really simple music bot I made as a first project to learn how to code.
 It uses DiscordJS.
