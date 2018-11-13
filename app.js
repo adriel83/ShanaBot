@@ -15,20 +15,48 @@ client.on('message', message => {
 }
 });
 client.on('message', message => {
+
 if (message.content.startsWith('tocar')){
+
 	if (tocando === 0) {
+
 		const channel = message.member.voiceChannel;
+
 		if (!channel) return message.channel.send('Você não está em um canal de voz.');
+
 		var link = message.content.slice('tocar'.length)
+
 		channel.join()
+
 		.then(connection => {
+
 		const stream = ytdl(link, { filter : 'audioonly' });
+
 		broadcast.playStream(stream);
+
 		const dispatcher = connection.playBroadcast(broadcast);
-		}
-		
+
+/*if (connection.speaking = false) {
+
+dispatcher.end();
+
+tocando = 0;
+
+}*/
+
+		})
+
+	}else if (tocando === 1) {
+
+		return message.channel.send('Já existe uma musica tocando');
+
+	}
+
 }
+
 });
+
+
 client.on('message', message => {
 if(message.content== 'sair') {
 	const channel = message.member.voiceChannel;
