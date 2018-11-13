@@ -24,12 +24,9 @@ if (message.content.startsWith('tocar')){
 		.then(connection => {
 		const stream = ytdl(link, { filter : 'audioonly' });
 		broadcast.playStream(stream);
-		tocando = 1;
 		const dispatcher = connection.playBroadcast(broadcast);
 		})
-	}else if (tocando === 1) {
-		return message.channel.send('Já existe uma musica tocando');
-	}
+		
 }
 });
 client.on('message', message => {
