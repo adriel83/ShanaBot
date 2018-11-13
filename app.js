@@ -26,10 +26,6 @@ if (message.content.startsWith('tocar')){
 		broadcast.playStream(stream);
 		tocando = 1;
 		const dispatcher = connection.playBroadcast(broadcast);
-            /*if (connection.speaking = false) {
-                dispatcher.end();
-                tocando = 0;
-            }*/
 		})
 	}else if (tocando === 1) {
 		return message.channel.send('Já existe uma musica tocando');
