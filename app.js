@@ -25,7 +25,7 @@ if (message.content.startsWith('tocar')){
 		const stream = ytdl(link, { filter : 'audioonly' });
 		broadcast.playStream(stream);
 		const dispatcher = connection.playBroadcast(broadcast);
-		})
+		}
 		
 }
 });
