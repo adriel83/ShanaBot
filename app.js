@@ -18,7 +18,7 @@ client.on('message', message => {
     if (message.content.startsWith('tocar')){
         const channel = message.member.voiceChannel;
         if (!channel) return message.channel.send('Você não está em um canal de voz.');
-        const permissions = voiceChannel.permissionsFor(msg.client.user);
+        const permissions = channel.permissionsFor(message.client.user);
         if(!permissions.has('CONNECT')){
             return message.channel.send('Não posso entrar nesse canal.');
         }
