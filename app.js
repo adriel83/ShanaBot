@@ -3,7 +3,7 @@ const client = new Discord.Client();
 const settings = require('./settings.json');
 const ytdl = require('ytdl-core');
 
-//Bom, ela conecta, pega o url mas não toca e não dá erro.
+//Status de conexão fica 1 pra sempre, talvez esteja relacionado á promessas.
 
 let fila = {};
 
@@ -11,7 +11,7 @@ const commands = {
     'tocar' :(message) =>{
         if (fila[message.guild.id] === undefined) return message.channel.send(`Coloque uma música na fila.`);
         if (fila[message.guild.id].playing) return message.channel.send('Já estou tocando.');
-        // if (!message.guild.voiceConnection) return commands.entrar(message).then(()=> commands.tocar(message));
+        if (!message.guild.voiceConnection) return commands.entrar(message).then(()=> commands.tocar(message));
         let dispatcher;
         fila[message.guild.id].playing = true;
         (function tocar(song) {
@@ -21,7 +21,7 @@ const commands = {
                 message.member.voiceChannel.leave();
             });
             message.channel.send(`Tocando: **${song.title}**`);
-            dispatcher = message.guild.voiceConnection.playStream(ytdl(url, { audioonly: true }));
+            dispatcher = message.guild.voiceConnection.playStream(ytdl(song.url, { audioonly: true }));
             dispatcher.on('end', () => {
                 tocar(fila[message.guild.id].songs.shift());
             });
@@ -31,12 +31,14 @@ const commands = {
                     tocar(fila[message.guild.id].songs.shift());
                 });
             });
-        })(fila[message.guild.id].songs.shift());;
+        })(fila[message.guild.id].songs.shift());
     },
     'entrar' : (message) =>{
-        const channel = message.member.voiceChannel;
-        if (!channel || channel.type !== 'voice') return message.reply('Não posso entrar nesse canal.');
-        channel.join();
+        return new Promise((resolve,reject)=>{
+            const channel = message.member.voiceChannel;
+            if (!channel || channel.type !== 'voice') return message.reply('Não posso entrar nesse canal.');
+            channel.join().then(connection => resolve(connection)) .catch(err => reject(err));
+        });
     },
     'sair' : (message) =>{
         const channel = message.member.voiceChannel;
@@ -60,6 +62,29 @@ const commands = {
             message.channel.send(`**${info.title}** adicionado á fila`);
         });
     },
+    'eval' : (message) => {
+        function clean(text) {
+            if (typeof(text) === "string")
+                return text.replace(/`/g, "`" + String.fromCharCode(8203)).replace(/@/g, "@" + String.fromCharCode(8203));
+            else
+                return text;
+        }
+        const args = message.content.split(" ").slice(1);
+        if (message.content.startsWith("eval")) {
+            if(message.author.id !== settings.ownerID) return;
+            try {
+                const code = args.join(" ");
+                let evaled = eval(code);
+
+                if (typeof evaled !== "string")
+                    evaled = require("util").inspect(evaled);
+
+                message.channel.send(clean(evaled), {code:"xl"});
+            } catch (err) {
+                message.channel.send(`\`ERROR\` \`\`\`xl\n${clean(err)}\n\`\`\``);
+            }
+        }
+    }
 }
 
 client.on('message', message => {
