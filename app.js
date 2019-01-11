@@ -2,6 +2,7 @@ const Discord = require('discord.js');
 const client = new Discord.Client();
 const settings = require('./settings.json');
 const ytdl = require('ytdl-core');
+url = "https://www.youtube.com/watch?v=Nn7aQYyKsQM";
 
 //Bom, ela conecta, pega o url mas não toca e não dá erro.
 
@@ -9,16 +10,30 @@ let fila = {};
 
 const commands = {
     'tocar' :(message) =>{
-        if (fila === undefined) return message.channel.send(`Coloque uma música na fila.`);
-        if (fila.playing) return message.channel.send('Já estou tocando.');
-        if (!message.guild.voiceConnection) return commands.join(message).then(() => commands.play(message));
+        if (fila[message.guild.id] === undefined) return message.channel.send(`Coloque uma música na fila.`);
+        if (fila[message.guild.id].playing) return message.channel.send('Já estou tocando.');
+        // if (!message.guild.voiceConnection) return commands.entrar(message).then(()=> commands.tocar(message));
         let dispatcher;
-        fila.playing = true;
-
-        function tocar(song){
-            message.channel.send(`Tocando:*${song.title}`);
-            dispatcher = message.guild.voiceConnection.playStream(ytdl(song.url, { audioonly: true }));
-        }
+        fila[message.guild.id].playing = true;
+        // console.log(fila);
+        (function tocar(song) {
+            console.log(song);
+            if (song === undefined) return message.channel.send('a Fila está vazia.').then(() => {
+                fila[message.guild.id].playing = false;
+                message.member.voiceChannel.leave();
+            });
+            message.channel.send(`Tocando: **${song.title}`);
+            dispatcher = message.guild.voiceConnection.playStream(ytdl(url, { audioonly: true }));
+            // dispatcher.on('end', () => {
+            //     tocar(fila[message.guild.id].songs.shift());
+            // });
+            dispatcher.on('error', (err) => {
+                return message.channel.send('Erro Dispatcher: ' + err).then(() => {
+                    console.log(err)
+                    // tocar(fila[message.guild.id].songs.shift());
+                });
+            });
+        })(fila[message.guild.id].songs.shift());;
     },
     'entrar' : (message) =>{
         const channel = message.member.voiceChannel;
@@ -31,9 +46,9 @@ const commands = {
         channel.leave();
     },
     'fila': (message) => {
-        if (fila === undefined) return message.channel.send(`Adicione uma musica á fila.`);
+        if (fila[message.guild.id] === undefined) return message.channel.send(`Adicione uma musica á fila.`);
         let tosend = [];
-        fila.songs.forEach((song, i) => { tosend.push(`${i+1}. ${song.url} - Pedido por: ${song.requester}`);});
+        fila[message.guild.id].songs.forEach((song, i) => { tosend.push(`${i+1}. ${song.title} ${song.url} - Pedido por: ${song.requester}`);});
         message.channel.send(`\`\`\`${tosend.slice(0,15).join('\n')}\`\`\``);
         // message.channel.send(tosend.length);
 
@@ -43,8 +58,8 @@ const commands = {
         //if (url == '' || url === undefined) return msg.channel.sendMessage();
         ytdl.getInfo(url, (err, info) => {
             if(err) return message.channel.send('Link Inválido: ' + err);
-            fila.playing = false, fila.songs = [];
-            fila.songs.push({url: url, title: info.title, requester: message.author.username});
+            if (!fila.hasOwnProperty(message.guild.id)) fila[message.guild.id] = {},fila[message.guild.id].playing = false, fila[message.guild.id].songs = [];
+            fila[message.guild.id].songs.push({url: url, title: info.title, requester: message.author.username});
             message.channel.send(`**${info.title}** adicionado á fila`);
         });
     },
