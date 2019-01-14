@@ -37,7 +37,13 @@ const commands = {
         return new Promise((resolve,reject)=>{
             const channel = message.member.voiceChannel;
             if (!channel || channel.type !== 'voice') return message.reply('Não posso entrar nesse canal.');
-            channel.join().then(connection => resolve(connection)) .catch(err => reject(err));
+            // channel.join().then(connection => resolve(connection)) .catch(err => reject(err));
+                    channel.join()
+                    .then(connection => { // Connection is an instance of VoiceConnection
+                        console.log(message.guild.voiceConnection.status);
+                        message.reply('entrei é isso');
+                    })
+                    .catch(console.log);
         });
     },
     'sair' : (message) =>{
