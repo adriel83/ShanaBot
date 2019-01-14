@@ -22,6 +22,7 @@ const commands = {
             });
             message.channel.send(`Tocando: **${song.title}**`);
             dispatcher = message.guild.voiceConnection.playStream(ytdl(song.url, { audioonly: true }));
+            client.user.setPresence({ status: 'online', game: { name: `Tocando: ${song.title}` } });
             dispatcher.on('end', () => {
                 tocar(fila[message.guild.id].songs.shift());
             });
@@ -32,21 +33,27 @@ const commands = {
                 });
             });
         })(fila[message.guild.id].songs.shift());
+        client.user.setPresence({ status: 'online', game: { name: 'o Yuuji da sacada' } });
     },
     'entrar' : (message) =>{
-        const channel = message.member.voiceChannel;
-        channel.join()
-        message.channel.send(message.guild.voiceConnection.status);
+        return new Promise((resolve,reject)=>{
+            const channel = message.member.voiceChannel;
+            if (!channel) return message.reply('Você não está em um canal de voz.');
+            if (channel.type !== 'voice') return message.reply('Não posso entrar nesse canal.');
+            channel.join().then(connection => resolve(connection)) .catch(err => reject(err));
+        });
     },
     'sair' : (message) =>{
-        const channel = message.member.voiceChannel;
-        if (!channel || channel.type !== 'voice') return message.reply('Não estou em um canal de voz.');
-        channel.leave();
+        return new Promise((resolve,reject)=>{
+            const channel = message.member.voiceChannel;
+            if (!channel) return message.reply('Não estou em um canal de voz.');
+            channel.leave();
+        });
     },
     'fila': (message) => {
         if (fila[message.guild.id] === undefined) return message.channel.send(`Adicione uma musica á fila.`);
         let tosend = [];
-        fila[message.guild.id].songs.forEach((song, i) => { tosend.push(`${i+1}. ${song.title} ${song.url} - Pedido por: ${song.requester}`);});
+        fila[message.guild.id].songs.forEach((song, i) => { tosend.push(`${i+1}. ${song.title}, URL: ${song.url} - Pedido por: ${song.requester}`);});
         message.channel.send(`\`\`\`${tosend.slice(0,15).join('\n')}\`\`\``);
 
     },
@@ -73,10 +80,6 @@ const commands = {
             try {
                 const code = args.join(" ");
                 let evaled = eval(code);
-
-                if (typeof evaled !== "string")
-                    evaled = require("util").inspect(evaled);
-
                 message.channel.send(clean(evaled), {code:"xl"});
             } catch (err) {
                 message.channel.send(`\`ERROR\` \`\`\`xl\n${clean(err)}\n\`\`\``);
