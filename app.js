@@ -40,7 +40,10 @@ const commands = {
             const channel = message.member.voiceChannel;
             if (!channel) return message.reply('Você não está em um canal de voz.');
             if (channel.type !== 'voice') return message.reply('Não posso entrar nesse canal.');
-            channel.join().then(connection => resolve(connection)) .catch(err => reject(err));
+            channel.join().then(connection => {
+                message.reply('Entrei');
+                resolve(connection)
+            }) .catch(err => reject(err));
         });
     },
     'sair' : (message) =>{
