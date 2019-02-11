@@ -6,6 +6,7 @@ const ytdl = require('ytdl-core');
 //Status de conexão fica 1 pra sempre, talvez esteja relacionado á promessas.
 
 let fila = {};
+client.on('debug', console.log);
 
 const commands = {
     'tocar' :(message) =>{
@@ -21,14 +22,14 @@ const commands = {
                 message.member.voiceChannel.leave();
             });
             message.channel.send(`Tocando: **${song.title}**`);
-            dispatcher = message.guild.voiceConnection.playStream(ytdl(song.url, { audioonly: true }));
+            dispatcher = message.guild.voiceConnection.playOpusStream(ytdl(song.url, { audioonly: true }));
             client.user.setPresence({ status: 'online', game: { name: `Tocando: ${song.title}` } });
             dispatcher.on('end', () => {
                 tocar(fila[message.guild.id].songs.shift());
             });
             dispatcher.on('error', (err) => {
                 return message.channel.send('Erro Dispatcher: ' + err).then(() => {
-                    console.log(err)
+                    console.log(err);
                     tocar(fila[message.guild.id].songs.shift());
                 });
             });
@@ -39,11 +40,13 @@ const commands = {
         return new Promise((resolve,reject)=>{
             const channel = message.member.voiceChannel;
             if (!channel) return message.reply('Você não está em um canal de voz.');
-            if (channel.type !== 'voice') return message.reply('Não posso entrar nesse canal.');
-            channel.join().then(connection => {
-                message.reply('Entrei');
-                resolve(connection)
-            }) .catch(err => reject(err));
+            if(channel){
+                if (channel.type !== 'voice') return message.reply('Não posso entrar nesse canal.');
+                channel.join().then(connection => {
+                    message.reply('Entrei');
+                    resolve(connection)
+                }) .catch(err => reject(err));
+            }
         });
     },
     'sair' : (message) =>{
@@ -62,7 +65,7 @@ const commands = {
     },
     'adicionar': (message) => {
         let url = message.content.split(' ')[1];
-        if (url == '' || url === undefined) return message.channel.send("Link Inválido");
+        if (url === '' || url === undefined) return message.channel.send("Link Inválido");
         ytdl.getInfo(url, (err, info) => {
             if(err) return message.channel.send('Link Inválido: ' + err);
             if (!fila.hasOwnProperty(message.guild.id)) fila[message.guild.id] = {},fila[message.guild.id].playing = false, fila[message.guild.id].songs = [];
