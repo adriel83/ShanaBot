@@ -22,7 +22,7 @@ const commands = {
                 message.member.voiceChannel.leave();
             });
             message.channel.send(`Tocando: **${song.title}**`);
-            dispatcher = message.guild.voiceConnection.playOpusStream(ytdl(song.url, { audioonly: true }));
+            dispatcher = message.guild.voiceConnection.play(ytdl(song.url, { audioonly: true }));
             client.user.setPresence({ status: 'online', game: { name: `Tocando: ${song.title}` } });
             dispatcher.on('end', () => {
                 tocar(fila[message.guild.id].songs.shift());
@@ -38,7 +38,7 @@ const commands = {
     },
     'entrar' : (message) =>{
         return new Promise((resolve,reject)=>{
-            const channel = message.member.voiceChannel;
+            const channel = message.member.voice.channel;
             if (!channel) return message.reply('Você não está em um canal de voz.');
             if(channel){
                 if (channel.type !== 'voice') return message.reply('Não posso entrar nesse canal.');
