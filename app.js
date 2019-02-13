@@ -6,7 +6,6 @@ const ytdl = require('ytdl-core');
 //Status de conexão fica 1 pra sempre, talvez esteja relacionado á promessas.
 
 let fila = {};
-client.on('debug', console.log);
 
 const commands = {
     'tocar' :(message) =>{
