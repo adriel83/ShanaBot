@@ -98,4 +98,6 @@ client.on('ready',() => {
     client.user.setPresence({ status: 'online', game: { name: 'o Yuuji da sacada' } });
 });
 
-client.login(settings.token);
+client.login(settings.token).then( ()=>
+    console.log("Loguei")
+);
