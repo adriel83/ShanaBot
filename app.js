@@ -3,8 +3,6 @@ const client = new Discord.Client();
 const settings = require('./settings.json');
 const ytdl = require('ytdl-core');
 
-//Status de conexão fica 1 pra sempre, talvez esteja relacionado á promessas.
-
 let fila = {};
 
 const commands = {
@@ -49,11 +47,9 @@ const commands = {
         });
     },
     'sair' : (message) =>{
-        return new Promise((resolve,reject)=>{
-            const channel = message.member.voiceChannel;
+            let channel = message.guild.voiceConnection.channel;
             if (!channel) return message.reply('Não estou em um canal de voz.');
             channel.leave();
-        });
     },
     'fila': (message) => {
         if (fila[message.guild.id] === undefined) return message.channel.send(`Adicione uma musica á fila.`);

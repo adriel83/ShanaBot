@@ -4,7 +4,7 @@
   "description": "Bot da Shana",
   "main": "app.js",
   "dependencies": {
-    "discord.js": "git+https://github.com/discordjs/discord.js.git#aab3523f",
+    "discord.js": "^11.4.2",
     "node-opus": "^0.3.1",
     "ytdl-core": "^0.29.1"
   },
