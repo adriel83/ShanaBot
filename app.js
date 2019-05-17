@@ -65,6 +65,7 @@ const commands = {
             if(err) return message.channel.send('Link Inválido: ' + err);
             if (!fila.hasOwnProperty(message.guild.id)) fila[message.guild.id] = {},fila[message.guild.id].playing = false, fila[message.guild.id].songs = [];
             fila[message.guild.id].songs.push({url: url, title: info.title, requester: message.author.username});
+            // message.react(;
             message.channel.send(`**${info.title}** adicionado á fila`);
         });
     },
@@ -95,7 +96,9 @@ client.on('message', message => {
 
 client.on('ready',() => {
     console.log('Pronta para salvar o dia');
-    client.user.setPresence({ status: 'online', game: { name: 'o Yuuji da sacada' } });
+    client.user.setActivity('HorribleSubs',{type: 'WATCHING'})
+        .then(presence => console.log(`Mudei a presença pra:  ${presence.game ? presence.game.name : 'none'}`))
+        .catch(console.error);
 });
 
 client.login(settings.token).then( ()=>
