@@ -47,9 +47,9 @@ const commands = {
         });
     },
     'sair' : (message) =>{
-            let channel = message.guild.voiceConnection.channel;
+            let channel = client.voiceConnections.first();
             if (!channel) return message.reply('Não estou em um canal de voz.');
-            channel.leave();
+            channel.disconnect();
     },
     'fila': (message) => {
         if (fila[message.guild.id] === undefined) return message.channel.send(`Adicione uma musica á fila.`);
