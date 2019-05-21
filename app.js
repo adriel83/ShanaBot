@@ -19,7 +19,7 @@ const commands = {
                 message.member.voiceChannel.leave();
             });
             message.channel.send(`Tocando: **${song.title}**`);
-            dispatcher = message.guild.voiceConnection.play(ytdl(song.url, { audioonly: true }));
+            dispatcher = message.guild.voiceConnection.playStream(ytdl(song.url, { audioonly: true }));
             client.user.setPresence({ status: 'online', game: { name: `Tocando: ${song.title}` } });
             dispatcher.on('end', () => {
                 tocar(fila[message.guild.id].songs.shift());
@@ -35,7 +35,7 @@ const commands = {
     },
     'entrar' : (message) =>{
         return new Promise((resolve,reject)=>{
-            const channel = message.member.voice.channel;
+            const channel = message.member.voiceChannel;
             if (!channel) return message.reply('Você não está em um canal de voz.');
             if(channel){
                 if (channel.type !== 'voice') return message.reply('Não posso entrar nesse canal.');
@@ -52,9 +52,12 @@ const commands = {
             channel.disconnect();
     },
     'fila': (message) => {
-        if (fila[message.guild.id] === undefined) return message.channel.send(`Adicione uma musica á fila.`);
+        if (fila[message.guild.id] === undefined || fila[message.guild.id].songs.keys() > 0) return message.channel.send(`A fila está vazia, adicione uma musica á fila usando "adicionar."`);
         let tosend = [];
         fila[message.guild.id].songs.forEach((song, i) => { tosend.push(`${i+1}. ${song.title}, URL: ${song.url} - Pedido por: ${song.requester}`);});
+        if(!tosend.length > 0){
+            return message.channel.send(`A fila está vazia, adicione uma musica á fila usando adicionar`);
+        }
         message.channel.send(`\`\`\`${tosend.slice(0,15).join('\n')}\`\`\``);
 
     },
