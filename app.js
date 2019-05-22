@@ -40,7 +40,6 @@ const commands = {
             if(channel){
                 if (channel.type !== 'voice') return message.reply('Não posso entrar nesse canal.');
                 channel.join().then(connection => {
-                    message.reply('Entrei');
                     resolve(connection)
                 }) .catch(err => reject(err));
             }
@@ -67,10 +66,20 @@ const commands = {
         ytdl.getInfo(url, (err, info) => {
             if(err) return message.channel.send('Link Inválido: ' + err);
             if (!fila.hasOwnProperty(message.guild.id)) fila[message.guild.id] = {},fila[message.guild.id].playing = false, fila[message.guild.id].songs = [];
-            fila[message.guild.id].songs.push({url: url, title: info.title, requester: message.author.username});
+            fila[message.guild.id].songs.push({url: url, title: info.title, requester: message.author.username, skip:message.author.id});
             // message.react(;
             message.channel.send(`**${info.title}** adicionado á fila`);
         });
+    },
+    'pular' : (message) => {
+        if (fila[message.guild.id] === undefined || fila[message.guild.id].songs.keys() > 0) return message.channel.send(`A fila está vazia, adicione uma musica á fila usando "adicionar."`);
+        if((message.author.id) === fila[message.guild.id].skip){
+            tocar(fila[message.guild.id].songs.shift());
+            return message.reply(`Pulando`);
+        }
+        if(!(message.author.id) === fila[message.guild.id].skip){
+            return message.reply(`Você não pode pular a música de outra pessoa.`);
+        }
     },
     'eval' : (message) => {
         function clean(text) {
@@ -105,5 +114,5 @@ client.on('ready',() => {
 });
 
 client.login(settings.token).then( ()=>
-    console.log("Loguei")
+    console.log("Loguei");
 );
