@@ -4,6 +4,7 @@ const settings = require('./settings.json');
 const ytdl = require('ytdl-core');
 
 let fila = {};
+let dispatcher;
 
 function tocar(song) {
     console.log(song);
@@ -31,7 +32,6 @@ const commands = {
         if (fila[message.guild.id] === undefined) return message.channel.send(`Coloque uma música na fila.`);
         if (fila[message.guild.id].playing) return message.channel.send('Já estou tocando.');
         if (!message.guild.voiceConnection) return commands.entrar(message).then(()=> commands.tocar(message));
-        let dispatcher;
         fila[message.guild.id].playing = true;
         client.user.setPresence({ status: 'online', game: { name: 'o Yuuji da sacada' } });
     },
