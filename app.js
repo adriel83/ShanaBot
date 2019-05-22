@@ -5,6 +5,27 @@ const ytdl = require('ytdl-core');
 
 let fila = {};
 
+function tocar(song) {
+    console.log(song);
+    if (song === undefined) return message.channel.send('a Fila está vazia.').then(() => {
+        fila[message.guild.id].playing = false;
+        message.member.voiceChannel.leave();
+    });
+    message.channel.send(`Tocando: **${song.title}**`);
+    dispatcher = message.guild.voiceConnection.playStream(ytdl(song.url, { audioonly: true }));
+    client.user.setPresence({ status: 'online', game: { name: `Tocando: ${song.title}` } });
+    dispatcher.on('end', () => {
+        tocar(fila[message.guild.id].songs.shift());
+    });
+    dispatcher.on('error', (err) => {
+        return message.channel.send('Erro Dispatcher: ' + err).then(() => {
+            console.log(err);
+            tocar(fila[message.guild.id].songs.shift());
+        });
+    });
+}
+
+
 const commands = {
     'tocar' :(message) =>{
         if (fila[message.guild.id] === undefined) return message.channel.send(`Coloque uma música na fila.`);
@@ -12,25 +33,6 @@ const commands = {
         if (!message.guild.voiceConnection) return commands.entrar(message).then(()=> commands.tocar(message));
         let dispatcher;
         fila[message.guild.id].playing = true;
-        (function tocar(song) {
-            console.log(song);
-            if (song === undefined) return message.channel.send('a Fila está vazia.').then(() => {
-                fila[message.guild.id].playing = false;
-                message.member.voiceChannel.leave();
-            });
-            message.channel.send(`Tocando: **${song.title}**`);
-            dispatcher = message.guild.voiceConnection.playStream(ytdl(song.url, { audioonly: true }));
-            client.user.setPresence({ status: 'online', game: { name: `Tocando: ${song.title}` } });
-            dispatcher.on('end', () => {
-                tocar(fila[message.guild.id].songs.shift());
-            });
-            dispatcher.on('error', (err) => {
-                return message.channel.send('Erro Dispatcher: ' + err).then(() => {
-                    console.log(err);
-                    tocar(fila[message.guild.id].songs.shift());
-                });
-            });
-        })(fila[message.guild.id].songs.shift());
         client.user.setPresence({ status: 'online', game: { name: 'o Yuuji da sacada' } });
     },
     'entrar' : (message) =>{
@@ -43,6 +45,7 @@ const commands = {
                     resolve(connection)
                 }) .catch(err => reject(err));
             }
+            fila[message.guild.id].songs.shift();
         });
     },
     'sair' : (message) =>{
@@ -114,5 +117,5 @@ client.on('ready',() => {
 });
 
 client.login(settings.token).then( ()=>
-    console.log("Loguei");
+    console.log("Loguei")
 );
