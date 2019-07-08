@@ -76,11 +76,11 @@ const commands = {
     },
     'pular' : (message) => {
         if (fila[message.guild.id] === undefined || fila[message.guild.id].songs.keys() > 0) return message.channel.send(`A fila está vazia, adicione uma musica á fila usando "adicionar."`);
-        if((message.author.id) === fila[message.guild.id].skip){
+        if((message.author.id) === fila[message.guild.id].songs[1].skip){
             tocar(fila[message.guild.id].songs.shift());
-            return message.reply(`Pulando`);
+            return message.reply(`Pulando **${info.title}**`);
         }
-        if(!(message.author.id) === fila[message.guild.id].skip){
+        if(!(message.author.id) === fila[message.guild.id].songs[1].skip){
             return message.reply(`Você não pode pular a música de outra pessoa.`);
         }
     },
