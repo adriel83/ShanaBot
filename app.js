@@ -2,6 +2,7 @@ const Discord = require('discord.js');
 const client = new Discord.Client();
 const settings = require('./settings.json');
 const ytdl = require('ytdl-core');
+const http = require('http');
 
 let fila = {};
 let prefixo = null;
@@ -125,6 +126,14 @@ client.on('message', message => {
 });
 
 client.on('ready',() => {
+    http.createServer((req, res) => {
+        res.writeHead(200, {
+            'Content-type': 'text/plain'
+        });
+        res.write('Hey');
+        res.end();
+        console.log('Servidor Rodando');
+    }).listen(4000);
     console.log('Pronta para salvar o dia');
     client.user.setActivity('HorribleSubs',{type: 'WATCHING'})
         .then(presence => console.log(`Mudei a presença pra:  ${presence.game ? presence.game.name : 'none'}`))
