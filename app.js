@@ -4,6 +4,7 @@ const settings = require('./settings.json');
 const ytdl = require('ytdl-core');
 
 let fila = {};
+let prefixo = null;
 let dispatcher;
 
 function tocar(song) {
@@ -34,6 +35,7 @@ const commands = {
         if (!message.guild.voiceConnection) return commands.entrar(message).then(()=> commands.tocar(message));
         fila[message.guild.id].playing = true;
         client.user.setPresence({ status: 'online', game: { name: 'o Yuuji da sacada' } });
+        tocar();
     },
     'entrar' : (message) =>{
         return new Promise((resolve,reject)=>{
@@ -104,7 +106,7 @@ const commands = {
         }
     },
     'prefixo':(message) =>{
-        if(message.toString().length < 0){
+        if(message.toString().length <= 0){
             message.channel.send(`Para adicionar um prefixo, use "prefixo + o prefixo que você quer."`);
         }
         if (!prefixo.hasOwnProperty(message.guild.id)){
@@ -114,7 +116,12 @@ const commands = {
 };
 
 client.on('message', message => {
-    if (commands.hasOwnProperty(message.content.toLowerCase().split(' ')[0])) commands[message.content.toLowerCase().split(' ')[0]](message);
+    if(prefixo){
+        if (commands.hasOwnProperty(message.content.toLowerCase().split(' ')[0])) commands[message.content.toLowerCase().split(' ')[0]](message);
+    }
+    if (prefixo = null){
+        message.channel.send("Defina um prefixo para os comandos.");
+    }
 });
 
 client.on('ready',() => {
