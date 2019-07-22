@@ -108,7 +108,7 @@ const commands = {
     },
     'prefixo':(message) =>{
         if(message.toString().length <= 0){
-            message.channel.send(`Para adicionar um prefixo, use "prefixo + o prefixo que você quer."`);
+            message.channel.send(`Para adicionar um prefixo, use "prefixo" + o prefixo que você quer.`);
         }
         if (!prefixo.hasOwnProperty(message.guild.id)){
             prefixo[message.guild.id] = message.toString();
@@ -120,7 +120,7 @@ client.on('message', message => {
     if(prefixo){
         if (commands.hasOwnProperty(message.content.toLowerCase().split(' ')[0])) commands[message.content.toLowerCase().split(' ')[0]](message);
     }
-    if (prefixo = null){
+    if ((prefixo = null) && !(message.content.toString() === 'prefixo')){
         message.channel.send("Defina um prefixo para os comandos.");
     }
 });
