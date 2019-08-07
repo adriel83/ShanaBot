@@ -1,36 +1,43 @@
 const Discord = require('discord.js');
 const fs = require('fs');
 const settings = require('./settings.json');
-const prefix = settings.prefix;
+const prefixo = settings.prefixo;
 const client = new Discord.Client();
-client.commands = new Discord.Collection();
 const cooldowns = new Discord.Collection();
 const arquivosComandos = fs.readdirSync('./comandos').filter(file => file.endsWith('.js'));
 
+
+client.comandos = new Discord.Collection();
 for (const arquivo of arquivosComandos) {
     const comando = require(`./comandos/${arquivo}`);
-    client.commands.set(comando.name, comando);
+    client.comandos.set(comando.name, comando);
 }
-console.log(client.commands);
 
 client.once('ready', () => {
     console.log('Ikkuso!');
 });
 
+client.on('error', error =>{
+   client.destroy().then(() => {
+       console.log("Ocorreu um erro, "+error);
+   });
+});
+
 client.on('message', message => {
-    if (!message.content.startsWith(prefix) || message.author.bot) return;
+    if (!message.content.startsWith(prefixo) || message.author.bot) return;
 
-    const args = message.content.slice(prefix.length).split(/ +/);
+    const args = message.content.slice(prefixo.length).split(/ +/);
     const nomeComando = args.shift().toLowerCase();
-    const comando = client.commands.get(nomeComando);
+    const comando = client.comandos.get(nomeComando);
 
-    if (!client.commands.has(comando)) return;
+
+    if (!client.comandos.has(nomeComando)) {console.log(`Comando não encontrado:${comando}`); return}
 
     //Argumentos
     if(comando.args && !args.length){
         let reply = `${message.author}, você não colocou nenhum argumento.!`;
         if(comando.usage){
-            reply += `\nVocê deve usar: \`${prefix}${command.name} ${command.usage}\``;
+            reply += `\nVocê deve usar: \`${prefixo}${comando.name} ${comando.usage}\``;
         }
 
         return message.channel.send(reply);
@@ -63,7 +70,7 @@ client.on('message', message => {
         message.reply('Houve um erro na execução desse comando.');
     }
 });
-
 client.login(settings.token).then( ()=>
     console.log("Loguei")
 );
+

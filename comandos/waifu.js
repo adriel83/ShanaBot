@@ -5,6 +5,8 @@ module.exports = {
     usage: '<waifu>',
     cooldown: 5,
     execute(message, args) {
-        message.channel.send(`Ò {message.author.name} ama muito a {args[0]}.`);
+        nome = message.author.username;
+        nomeWaifu = args[0];
+        message.channel.send("O "+ nome + " ama muito a "+ nomeWaifu);
     },
 };
