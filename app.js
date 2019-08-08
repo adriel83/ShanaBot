@@ -27,10 +27,10 @@ client.on('message', message => {
 
     const args = message.content.slice(prefixo.length).split(/ +/);
     const nomeComando = args.shift().toLowerCase();
-    const comando = client.comandos.get(nomeComando);
+    const comando = client.comandos.get(nomeComando) || client.comandos.find(cmd => cmd.alias && cmd.alias.includes(nomeComando));
 
 
-    if (!client.comandos.has(nomeComando)) {console.log(`Comando não encontrado:${comando}`); return}
+    if (!comando) {console.log(`Comando não encontrado:${comando}`); return}
 
     //Argumentos
     if(comando.args && !args.length){
