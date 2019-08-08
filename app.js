@@ -6,7 +6,6 @@ const client = new Discord.Client();
 const cooldowns = new Discord.Collection();
 const arquivosComandos = fs.readdirSync('./comandos').filter(file => file.endsWith('.js'));
 
-
 client.comandos = new Discord.Collection();
 for (const arquivo of arquivosComandos) {
     const comando = require(`./comandos/${arquivo}`);
