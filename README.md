@@ -1,3 +1,3 @@
 # ShanaBot
-A really simple music bot I made as a first project to learn how to code.
-It uses DiscordJS.
+You can use Shana-tan to search for stuff on MAL through Jikan.
+It uses [DiscordJS](https://discord.js.org/#/), [Jikan](https://jikan.moe/) and the [Jikan node wrapper](https://github.com/xy137/jikan-node).
