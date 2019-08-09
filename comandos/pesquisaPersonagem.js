@@ -3,6 +3,7 @@ const Jikan = require('jikan-node');
 const mal = new Jikan();
 
 //TODO: Implementar um coletor de reação na mensagem que o bot envia para poder determinar qual personagem pesquisar no MAL
+//TODO: Implementar uma maneira de preencher o embed dinamicamente, com no máximo 5 personagem(talvez fazer paginação também).
 
 module.exports = {
     name: 'pesquisarp',
