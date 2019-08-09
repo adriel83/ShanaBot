@@ -32,7 +32,7 @@ module.exports = {
         data.push("Nome do comando:" + comando.title);
         if(comando.description) {data.push("Descrição:" + comando.description);}
         if(comando.cooldown) {data.push("Cooldown:" + comando.cooldown);}
-        if(comando.usage)       {data.push(`**Como usar:** ${prefix}${comando.name} ${comando.usage}`)}
+        if(comando.usage)       {data.push(`Como usar: ${prefix}${comando.name} ${comando.usage}`)}
         message.reply(data, {split : true});
     },
 };

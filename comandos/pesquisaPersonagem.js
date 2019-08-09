@@ -13,7 +13,6 @@ module.exports = {
         nome = message.author.username;
         nomePersonagem = args;
         // message.channel.send("O "+ nome + " ama muito a "+ nomeWaifu);
-        //TODO:Resolver promesas rejeitadas.
         mal.search('character', nomePersonagem, 1).then((result) =>{
             personagem = result.results[0];
             console.log(result.results[0]);
@@ -33,6 +32,8 @@ module.exports = {
                     // .addBlankField()
                     .setTimestamp();
                 message.channel.send(embedWaifu);
+            }).catch(() =>{
+                message.channel.send(`Não encontrei nenhum personagem chamado ${nomePersonagem}.`);
             });
         });
 
