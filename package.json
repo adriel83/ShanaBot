@@ -10,10 +10,12 @@
     "node-opus": "^0.3.1",
     "ytdl-core": "^0.29.1"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "nodemon": "^1.19.1"
+  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node app.js"
+    "start": "nodemon app.js"
   },
   "author": "Adriel",
   "license": "MIT"

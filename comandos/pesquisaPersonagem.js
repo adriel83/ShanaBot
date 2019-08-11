@@ -2,18 +2,24 @@ const Discord = require('discord.js');
 const Jikan = require('jikan-node');
 const mal = new Jikan();
 function criarDescricao (personagens){
-    var anime;
-    var nome;
-    let c;
-    for (i = 0; i<personagens.length && i < 10; i++){
-        if(personagens[i] !== undefined){
-            nome = personagens[i].name;
-            anime = personagens[i].anime[0].name;
+    let c = "";
+    for (i = 0; i < personagens.length && i<10; i++){
+        let personagem = personagens[i];
+        let nome = personagem.name;
+        let anime = personagem.anime;
+        let manga = personagem.manga;
+        let nomeAnime = "";
+        let nomeManga = "";
+        if(typeof anime !== 'undefined' && anime.length > 0){
+            nomeAnime = anime[0].name;
+            c += `${i+1}: **${nome}** \n ${nomeAnime} \n \n`;
+        }else
+        if(typeof manga !== 'undefined' && manga.length > 0){
+            nomeManga = manga[0].name;
+            c += `${i+1}: **${nome}** \n ${nomeManga} \n \n`;
         }
-        if(i===0){
-            c = `${i+1}: Nome: ${nome} \n Anime: ${anime} \n \n`;
-        }
-        c += `${i+1}: Nome: ${nome} \n Anime: ${anime} \n \n`;
+        console.log(anime);
+        // anime = personagens[i].anime[1].name;
     }
     return c;
 }
@@ -31,8 +37,12 @@ module.exports = {
         nomePersonagem = args;
         // message.channel.send("O "+ nome + " ama muito a "+ nomeWaifu);
         mal.search('character', nomePersonagem, 1).then((result) =>{
-            personagem = result.results[0];
             personagens = result.results;
+            let numerosFiltro = [];
+            for (i = 0; i<personagens.length && i < 10; i++){
+                numerosFiltro.fill(i);
+            }
+            const filter = m => m.content.includes(numerosFiltro.entries().toString());
             var animePersonagens = [];
             for (i = 0; i < personagens.length; i++){
                 personagens[i].anime.sort((a,b) => (a.mal_id > b.mal_id) ? 1 : ((b.mal_id> a.mal_id) ? -1 : 0));
@@ -42,6 +52,15 @@ module.exports = {
                 .setDescription(criarDescricao(personagens))
                 .setTimestamp();
             message.channel.send(embedSelecao);
+            message.channel.send("Escolha o personagem desejado enviando o numero correspondente").then(() => {
+                message.channel.awaitMessages(numerosFiltro, { maxMatches: 1, time: 30000, errors: ['time'] })
+                    .then(collected => {
+                        message.channel.send(`ssssssssssssss`);
+                    })
+                    .catch(collected => {
+                        message.channel.send('Looks like nobody got the answer this time.');
+                    });
+            });
 
 
             //React de mensagem
@@ -70,6 +89,9 @@ module.exports = {
             }).catch(() =>{
                 // message.channel.send(`Não encontrei nenhum personagem chamado ${nomePersonagem}.`);
             });
+        }).catch((response) => {
+            console.log(response);
+            message.channel.send(`Nao encontrei nenhum personagem chamado ${nomePersonagem}`);
         });
 
     },
