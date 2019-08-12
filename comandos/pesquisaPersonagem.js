@@ -18,7 +18,7 @@ function criarDescricao (personagens){
             nomeManga = manga[0].name;
             c += `${i+1}: **${nome}** \n ${nomeManga} \n \n`;
         }
-        console.log(anime);
+        // console.log(anime);
         // anime = personagens[i].anime[1].name;
     }
     return c;
@@ -40,10 +40,9 @@ module.exports = {
             personagens = result.results;
             let numerosFiltro = [];
             for (i = 0; i<personagens.length && i < 10; i++){
-                numerosFiltro.fill(i);
+                numerosFiltro += i.toString();
+                console.log(numerosFiltro);
             }
-            const filter = m => m.content.includes(numerosFiltro.entries().toString());
-            var animePersonagens = [];
             for (i = 0; i < personagens.length; i++){
                 personagens[i].anime.sort((a,b) => (a.mal_id > b.mal_id) ? 1 : ((b.mal_id> a.mal_id) ? -1 : 0));
             }
@@ -53,12 +52,41 @@ module.exports = {
                 .setTimestamp();
             message.channel.send(embedSelecao);
             message.channel.send("Escolha o personagem desejado enviando o numero correspondente").then(() => {
-                message.channel.awaitMessages(numerosFiltro, { maxMatches: 1, time: 30000, errors: ['time'] })
+                let i;
+                // const filter =  m => numerosFiltro.includes(m.content);
+                message.channel.awaitMessages(response => {
+                        for(i = 0; i<numerosFiltro.length; i++){
+                            if(response.content === numerosFiltro[i]){
+                                return true
+                            }
+                        }
+                }
+                    , {
+                    max: 1,
+                    time: 30000,
+                    errors: ['time'],
+                })
                     .then(collected => {
-                        message.channel.send(`ssssssssssssss`);
+                        mal.findCharacter(personagens[i-1].mal_id, '').then((result) =>{
+                            // console.log(result);
+                            personagem = result;
+                            const embedWaifu = new Discord.RichEmbed()
+                                .setColor('#0099ff')
+                                .setTitle(personagem.name)
+                                .setColor("BLUE")
+                                .setImage(personagem.image_url)
+                                .setDescription(personagem.nicknames[0])
+                                .addField('Página no MAL', personagem.url)
+                                .addField('Anime origem', personagem.animeography[0].name +'\n'+ personagem.animeography[0].url, true)
+                                .addField('Dublador(a)', personagem.voice_actors[0].name , true)
+                                .setURL(personagem.animeography[0].url)
+                                // .addBlankField()
+                                .setTimestamp();
+                            message.channel.send(embedWaifu);
+                        });
                     })
                     .catch(collected => {
-                        message.channel.send('Looks like nobody got the answer this time.');
+                        message.channel.send('O tempo acabou.');
                     });
             });
 
@@ -70,25 +98,6 @@ module.exports = {
             //     .then(collected => console.log(`Collected ${collected.size} reactions`))
             //     .catch(console.error);
 
-            mal.findCharacter(personagem.mal_id, '').then((result) =>{
-                // console.log(result);
-                personagem = result;
-                const embedWaifu = new Discord.RichEmbed()
-                    .setColor('#0099ff')
-                    .setTitle(personagem.name)
-                    .setColor("BLUE")
-                    .setImage(personagem.image_url)
-                    .setDescription(personagem.name_kanji + '\n' + personagem.nicknames[0])
-                    .addField('Página no MAL', waifu.url)
-                    .addField('Anime origem', personagem.animeography[0].name +'\n'+ personagem.animeography[0].url, true)
-                    .addField('Dublador(a)', personagem.voice_actors[0] , true)
-                    .setURL(personagem.animeography[0].url)
-                    // .addBlankField()
-                    .setTimestamp();
-                message.channel.send(embedWaifu);
-            }).catch(() =>{
-                // message.channel.send(`Não encontrei nenhum personagem chamado ${nomePersonagem}.`);
-            });
         }).catch((response) => {
             console.log(response);
             message.channel.send(`Nao encontrei nenhum personagem chamado ${nomePersonagem}`);
