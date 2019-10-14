@@ -1,6 +1,8 @@
 const Discord = require('discord.js');
 const Jikan = require('jikan-node');
 const mal = new Jikan();
+var moment = require('moment');
+moment.locale('pt-br');
 function criarDescricao (animes){
     let c = "";
     for (i = 0; i < animes.length && i<10; i++){
@@ -8,7 +10,7 @@ function criarDescricao (animes){
         let nome = anime.title;
         let score = anime.score;
         let url = anime.url;
-        c += `${i+1}: **${nome}** \n **Nota:**${score} \n \n`;
+        c += `${i+1}: **${nome}** \n **Nota:** ${score} \n \n`;
     }
     return c;
 }
@@ -32,19 +34,19 @@ module.exports = {
                 .setTitle("Resultados")
                 .setDescription(criarDescricao(animes))
                 .setTimestamp();
-            message.channel.send(embedSelecao);
-            message.channel.send("Escolha o anime desejado enviando o numero correspondente").then(() => {
+            message.channel.send("Escolha o anime desejado enviando o numero correspondente", embedSelecao).then((msg) => {
                 let i;
                 message.channel.awaitMessages(response => {
                         for(i = 0; i<numerosFiltro.length; i++){
                             if(response.content === numerosFiltro[i]){
+                                response.delete();
                                 return true
                             }
                         }
                     }
                     , {
                         max: 1,
-                        time: 30000,
+                        time: 10000,
                         errors: ['time'],
                     })
                     .then(collected => {
@@ -60,13 +62,17 @@ module.exports = {
                                 .addField('Página no MAL', anime.url)
                                 .addField('Membros', anime.members, true)
                                 .addField('Estúdio', anime.studios[0].name, true)
+                                .addField('Data', moment(new Date(anime.aired.from)).format('DD MMMM, YYYY'), true)
+                                .addField('Nota', anime.score, true)
                                 .setURL(anime.url)
                                 .setTimestamp();
                             message.channel.send(embedAnime);
+                            msg.delete();
                         });
                     })
                     .catch(collected => {
                         message.channel.send('O tempo acabou.');
+                        msg.delete();
                     });
             });
         }).catch((response) => {

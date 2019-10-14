@@ -45,41 +45,44 @@ module.exports = {
                 .setTitle("Resultados")
                 .setDescription(criarDescricao(personagens))
                 .setTimestamp();
-            message.channel.send(embedSelecao);
-            message.channel.send("Escolha o personagem desejado enviando o numero correspondente").then(() => {
+            // message.channel.send(, embedSelecao);
+            message.channel.send("Escolha o personagem desejado enviando o numero correspondente", embedSelecao).then((msg) => {
                 let i;
                 message.channel.awaitMessages(response => {
                         for(i = 0; i<numerosFiltro.length; i++){
                             if(response.content === numerosFiltro[i]){
+                                response.delete();
                                 return true
                             }
                         }
                 }
                     , {
                     max: 1,
-                    time: 30000,
+                    time: 10000,
                     errors: ['time'],
                 })
                     .then(collected => {
                         mal.findCharacter(personagens[i-1].mal_id, '').then((result) =>{
-                            // console.log(result);
                             personagem = result;
+                            console.log(personagem.voice_actors);
                             const embedWaifu = new Discord.RichEmbed()
                                 .setColor('#0099ff')
-                                .setTitle(personagem.name)
+                                .setTitle((personagem.name) ? personagem.name : '')
                                 .setColor("BLUE")
                                 .setImage(personagem.image_url)
-                                .setDescription(personagem.nicknames[0])
+                                .setDescription((personagem.nicknames[0]) ? personagem.nicknames[0] : '')
                                 .addField('Página no MAL', personagem.url)
-                                .addField('Anime origem', personagem.animeography[0].name +'\n'+ personagem.animeography[0].url, true)
+                                .addField('Obra', personagem.animeography[0].name +'\n'+ personagem.animeography[0].url, true)
                                 .addField('Dublador(a)', personagem.voice_actors[0].name , true)
                                 .setURL(personagem.animeography[0].url)
                                 .setTimestamp();
                             message.channel.send(embedWaifu);
+                            msg.delete();
                         });
                     })
                     .catch(collected => {
                         message.channel.send('O tempo acabou.');
+                        msg.delete();
                     });
             });
         }).catch((response) => {
