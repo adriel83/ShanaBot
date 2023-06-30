@@ -26,6 +26,9 @@ module.exports = {
         mal.search('character', nomePersonagem, 1).then((result) =>{
             personagens = result.data;
             let numerosFiltro = [];
+            if (!personagens.length) {
+                return message.channel.send('>(');
+            }
             for (i = 0; i<personagens.length && i < 10; i++){
                 numerosFiltro += i.toString();
             }
@@ -35,8 +38,8 @@ module.exports = {
             const embedSelecao = new EmbedBuilder()
                 .setTitle(personagens[0].name)
 	            .setURL(personagens[0].url)
-                .addFields({ name: 'Nome Japones', value: personagens[0].name_kanji, inline: true})
-                .addFields({ name: 'Favoritos', value: personagens[0].favorites.toString(), inline: true })
+                .addFields({ name: 'Nome Japones', value: personagens[0].name_kanji || 'Não tem', inline: true})
+                .addFields({ name: 'Favoritos', value: personagens[0].favorites.toString() || '0', inline: true })
                 .setTimestamp()
                 .setImage(personagens[0].images.webp.image_url);
             // message.channel.send(, embedSelecao);
