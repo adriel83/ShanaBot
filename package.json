@@ -1,0 +1,23 @@
+{
+  "name": "shana",
+  "version": "0.0.3",
+  "description": "Bot da Shana",
+  "main": "app.js",
+  "dependencies": {
+    "discord.js": "^14.11.0",
+    "ffmpeg": "^0.0.4",
+    "jikan-node": "^1.2.0",
+    "moment": "^2.24.0",
+    "node-opus": "^0.3.1",
+    "ytdl-core": "^0.29.1"
+  },
+  "devDependencies": {
+    "nodemon": "^1.19.1"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon app.js"
+  },
+  "author": "Adriel",
+  "license": "MIT"
+}
